@@ -16,12 +16,13 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Game = props => {
-  const { game, memory, actions } = props;
+  const { game, memory, actions: { flipCard, restart } } = props;
 
   useEffect(() => {
     const { cards, round } = memory;
     const finished = cards.every(card => card.discovered);
     if (finished) {
+      restart();
       Inertia.post(`/game/${game.id}/finish`, {
         steps: round - 1
       });
@@ -32,7 +33,7 @@ const Game = props => {
     <Fragment>
       <h1>Game #{game.id}</h1>
       <h3>Current steps: {memory.round - 1}</h3>
-      <CardList cards={memory.cards} flipCard={actions.flipCard} />
+      <CardList cards={memory.cards} flipCard={flipCard} />
     </Fragment>
   );
 };
