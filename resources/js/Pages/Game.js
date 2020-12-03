@@ -22,10 +22,10 @@ const Game = props => {
     const { cards, round } = memory;
     const finished = cards.every(card => card.discovered);
     if (finished) {
-      restart();
       Inertia.post(`/game/${game.id}/finish`, {
         steps: round - 1
       });
+      restart();
     }
   });
 
